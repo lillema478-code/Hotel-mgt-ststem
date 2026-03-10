@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everest Hotel • Premium Management System</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts - Luxury Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0b0f1a 0%, #1a1f2e 100%);
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Luxury Background Pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(200, 170, 100, 0.05) 0%, transparent 30%),
+                        radial-gradient(circle at 80% 70%, rgba(200, 170, 100, 0.05) 0%, transparent 30%),
+                        repeating-linear-gradient(45deg, rgba(200, 170, 100, 0.02) 0px, rgba(200, 170, 100, 0.02) 2px, transparent 2px, transparent 10px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ===== PREMIUM HEADER ===== */
+        .premium-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(200, 170, 100, 0.3);
+            z-index: 1000;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #c8aa64, #a58b4f);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #0b0f1a;
+            box-shadow: 0 5px 20px rgba(200, 170, 100, 0.4);
+        }
+
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .logo-text h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #c8aa64);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            color: #c8aa64;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #c8aa64, transparent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #c8aa64;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: #c8aa64;
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .btn-reserve {
+            background: linear-gradient(135deg, #c8aa64, #a58b4f);
+            color: #0b0f1a !important;
+            padding: 0.8rem 2rem !important;
+            border-radius: 50px;
+            font-weight: 700 !important;
+        }
+
+        .btn-reserve:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(200, 170, 100, 0.3);
+        }
+
+        .btn-reserve::after {
+            display: none !important;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 2rem;
+            color: #c8aa64;
+            cursor: pointer;
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            min-height: 100vh;
+            padding: 100px 5% 50px;
+            display: none;
+        }
+
+        .section.active-section {
+            display: block;
+        }
+
+        /* ===== HERO SECTION ===== */
+        #home-section {
+            background: linear-gradient(135deg, #0b0f1a 0%, #1a1f2e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #home-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            padding-top: 50px;
+        }
+
+        .hero-text {
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .luxury-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(200, 170, 100, 0.15);
+            border: 1px solid rgba(200, 170, 100, 0.3);
+            border-radius: 50px;
+            color: #c8aa64;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-text h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text h1 span {
+            color: #c8aa64;
+            display: block;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #c8aa64;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #c8aa64, #a58b4f);
+            color: #0b0f1a;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(200, 170, 100, 0.4);
+        }
+
+        .btn-outline {
+            border: 2px solid #c8aa64;
+            color: #c8aa64;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .btn-outline:hover {
+            background: #c8aa64;
+            color: #0b0f1a;
+        }
+
+        .hero-image {
+            animation: fadeInRight 1s ease;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hotel-image {
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            border: 3px solid rgba(200, 170, 100, 0.3);
+        }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .section-title span {
+            color: #c8aa64;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            margin-bottom: 4rem;
+            letter-spacing: 2px;
+        }
+
+        /* ===== ROOMS SECTION ===== */
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .room-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(200, 170, 100, 0.2);
+            border-radius: 30px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .room-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #c8aa64, transparent);
+            transition: transform 0.3s ease;
+        }
+
+        .room-card:hover {
+            transform: translateY(-10px);
+            border-color: #c8aa64;
+            box-shadow: 0 30px 40px -20px rgba(200, 170, 100, 0.4);
+        }
+
+        .room-image {
+            width: 100%;
+            height: 250px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .room-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .room-card:hover .room-image img {
+            transform: scale(1.1);
+        }
+
+        .room-category {
+            color: #c8aa64;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .room-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+
+        .room-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #c8aa64;
+            margin: 1rem 0;
+        }
+
+        .room-price span {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .room-features {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .room-features i {
+            color: #c8aa64;
+            margin-right: 5px;
+        }
+
+        .btn-book {
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            border: 2px solid #c8aa64;
+            color: #c8aa64;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-book:hover {
+            background: #c8aa64;
+            color: #0b0f1a;
+        }
+
+        /* ===== FACILITIES SECTION ===== */
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .facility-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(200, 170, 100, 0.2);
+            border-radius: 30px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .facility-card:hover {
+            transform: translateY(-10px);
+            border-color: #c8aa64;
+            box-shadow: 0 30px 40px -20px rgba(200, 170, 100, 0.4);
+        }
+
+        .facility-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(200, 170, 100, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: #c8aa64;
+        }
+
+        .facility-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .facility-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ===== DINING SECTION ===== */
+        .dining-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .dining-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(200, 170, 100, 0.2);
+            border-radius: 30px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .dining-card:hover {
+            transform: translateY(-10px);
+            border-color: #c8aa64;
+            box-shadow: 0 30px 40px -20px rgba(200, 170, 100, 0.4);
+        }
+
+        .dining-image {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .dining-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .dining-card:hover .dining-image img {
+            transform: scale(1.1);
+        }
+
+        .dining-content {
+            padding: 2rem;
+        }
+
+        .dining-content h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .dining-content p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .dining-meta {
+            display: flex;
+            gap: 2rem;
+            color: #c8aa64;
+        }
+
+        /* ===== GALLERY SECTION ===== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 300px;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(200, 170, 100, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay i {
+            font-size: 3rem;
+            color: white;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(200, 170, 100, 0.2);
+            border-radius: 30px;
+            padding: 3rem;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: #c8aa64;
+        }
+
+        .contact-detail {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(200, 170, 100, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #c8aa64;
+        }
+
+        .contact-text h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-text p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(200, 170, 100, 0.2);
+            border-radius: 30px;
+            padding: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(200, 170, 100, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #c8aa64;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        /* ===== TEAM SECTION ===== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(200, 170, 100, 0.2);
+            border-radius: 30px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            border-color: #c8aa64;
+            box-shadow: 0 30px 40px -20px rgba(200, 170, 100, 0.4);
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #c8aa64;
+            box-shadow: 0 10px 20px rgba(200, 170, 100, 0.3);
+        }
+
+        .team-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: #c8aa64;
+        }
+
+        .team-role {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-id {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .team-social {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .team-social a {
+            color: rgba(255, 255, 255, 0.5);
+            transition: color 0.3s ease;
+        }
+
+        .team-social a:hover {
+            color: #c8aa64;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: rgba(10, 14, 23, 0.95);
+            border-top: 1px solid rgba(200, 170, 100, 0.2);
+            padding: 3rem 5% 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #c8aa64;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links h4 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #c8aa64;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(200, 170, 100, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .group-members {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            color: #c8aa64;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .rooms-grid,
+            .facilities-grid,
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dining-grid,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .rooms-grid,
+            .facilities-grid,
+            .team-grid,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header class="premium-header">
+        <div class="nav-container">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>EVEREST</h1>
+                    <p>HOTEL & RESORT</p>
+                </div>
+            </div>
+
+            <div class="nav-links">
+                <a class="nav-item active" onclick="showSection('home')">HOME</a>
+                <a class="nav-item" onclick="showSection('rooms')">ROOMS</a>
+                <a class="nav-item" onclick="showSection('facilities')">FACILITIES</a>
+                <a class="nav-item" onclick="showSection('dining')">DINING</a>
+                <a class="nav-item" onclick="showSection('gallery')">GALLERY</a>
+                <a class="nav-item" onclick="showSection('contact')">CONTACT</a>
+                <a class="nav-item" onclick="showSection('team')">OUR TEAM</a>
+                <a class="btn-reserve" onclick="showSection('booking')">BOOK NOW</a>
+            </div>
+
+            <div class="mobile-menu" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== HOME SECTION ===== -->
+    <section id="home-section" class="section active-section">
+        <div class="hero-content">
+            <div class="hero-text" data-aos="fade-right">
+                <span class="luxury-badge">
+                    <i class="fas fa-star"></i> LUXURY REDEFINED
+                </span>
+                <h1>Experience <span>The Finest</span> Hospitality</h1>
+                <p>Welcome to Everest Hotel, where luxury meets comfort. Experience unparalleled service and breathtaking views in the heart of the city.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">150+</span>
+                        <span class="stat-label">LUXURY ROOMS</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">5</span>
+                        <span class="stat-label">RESTAURANTS</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">SERVICE</span>
+                    </div>
+                </div>
+
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="showSection('rooms')">VIEW ROOMS</button>
+                    <button class="btn-outline" onclick="showSection('contact')">CONTACT US</button>
+                </div>
+            </div>
+
+            <div class="hero-image" data-aos="fade-left">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hotel" class="hotel-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ROOMS SECTION ===== -->
+    <section id="rooms-section" class="section">
+        <h2 class="section-title" data-aos="fade-up">Luxury <span>Rooms</span></h2>
+        <p class="section-subtitle" data-aos="fade-up">Experience unparalleled comfort and elegance</p>
+
+        <div class="rooms-grid">
+            <!-- Room 1 -->
+            <div class="room-card" data-aos="fade-up">
+                <div class="room-image">
+                    <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Presidential Suite">
+                </div>
+                <span class="room-category">PRESIDENTIAL</span>
+                <h3 class="room-title">Presidential Suite</h3>
+                <div class="room-price">$999 <span>/ night</span></div>
+                <div class="room-features">
+                    <span><i class="fas fa-wifi"></i> Free WiFi</span>
+                    <span><i class="fas fa-dumbbell"></i> Gym</span>
+                </div>
+                <button class="btn-book">BOOK NOW</button>
+            </div>
+
+            <!-- Room 2 -->
+            <div class="room-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="room-image">
+                    <img src="https://images.unsplash.com/photo-1591088246692-4d8a2f9b1b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Executive Suite">
+                </div>
+                <span class="room-category">EXECUTIVE</span>
+                <h3 class="room-title">Executive Suite</h3>
+                <div class="room-price">$699 <span>/ night</span></div>
+                <div class="room-features">
+                    <span><i class="fas fa-wifi"></i> Free WiFi</span>
+                    <span><i class="fas fa-coffee"></i> Breakfast</span>
+                </div>
+                <button class="btn-book">BOOK NOW</button>
+            </div>
+
+            <!-- Room 3 -->
+            <div class="room-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="room-image">
+                    <img src="https://images.unsplash.com/photo-1591088246692-4d8a2f9b1b9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Deluxe Room">
+                </div>
+                <span class="room-category">DELUXE</span>
+                <h3 class="room-title">Deluxe Room</h3>
+                <div class="room-price">$399 <span>/ night</span></div>
+                <div class="room-features">
+                    <span><i class="fas fa-wifi"></i> Free WiFi</span>
+                    <span><i class="fas fa-parking"></i> Parking</span>
+                </div>
+                <button class="btn-book">BOOK NOW</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FACILITIES SECTION ===== -->
+    <section id="facilities-section" class="section">
+        <h2 class="section-title" data-aos="fade-up">Premium <span>Facilities</span></h2>
+        <p class="section-subtitle" data-aos="fade-up">World-class amenities for our distinguished guests</p>
+
+        <div class="facilities-grid">
+            <div class="facility-card" data-aos="fade-up">
+                <div class="facility-icon">
+                    <i class="fas fa-swimming-pool"></i>
+                </div>
+                <h3 class="facility-title">Infinity Pool</h3>
+                <p class="facility-desc">Rooftop infinity pool with panoramic city views</p>
+            </div>
+
+            <div class="facility-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="facility-icon">
+                    <i class="fas fa-spa"></i>
+                </div>
+                <h3 class="facility-title">Luxury Spa</h3>
+                <p class="facility-desc">Traditional and modern wellness treatments</p>
+            </div>
+
+            <div class="facility-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="facility-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <h3 class="facility-title">Fitness Center</h3>
+                <p class="facility-desc">State-of-the-art equipment and personal trainers</p>
+            </div>
+
+            <div class="facility-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="facility-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h3 class="facility-title">Fine Dining</h3>
+                <p class="facility-desc">5 international cuisine restaurants</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== DINING SECTION ===== -->
+    <section id="dining-section" class="section">
+        <h2 class="section-title" data-aos="fade-up">Exquisite <span>Dining</span></h2>
+        <p class="section-subtitle" data-aos="fade-up">Culinary journey around the world</p>
+
+        <div class="dining-grid">
+            <div class="dining-card" data-aos="fade-right">
+                <div class="dining-image">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sky Lounge">
+                </div>
+                <div class="dining-content">
+                    <h3>Sky Lounge</h3>
+                    <p>Experience dining at 50 floors above the city with breathtaking views and exquisite cuisine.</p>
+                    <div class="dining-meta">
+                        <span><i class="fas fa-clock"></i> 6PM - 2AM</span>
+                        <span><i class="fas fa-utensils"></i> International</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dining-card" data-aos="fade-left">
+                <div class="dining-image">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Garden Restaurant">
+                </div>
+                <div class="dining-content">
+                    <h3>Garden Restaurant</h3>
+                    <p>Al fresco dining in our tropical garden, featuring local and international specialties.</p>
+                    <div class="dining-meta">
+                        <span><i class="fas fa-clock"></i> 7AM - 11PM</span>
+                        <span><i class="fas fa-leaf"></i> Organic</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== GALLERY SECTION ===== -->
+    <section id="gallery-section" class="section">
+        <h2 class="section-title" data-aos="fade-up">Photo <span>Gallery</span></h2>
+        <p class="section-subtitle" data-aos="fade-up">Moments captured at our hotel</p>
+
+        <div class="gallery-grid">
+            <div class="gallery-item" data-aos="zoom-in">
+                <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Lobby">
+                <div class="gallery-overlay">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+            </div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Room">
+                <div class="gallery-overlay">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+            </div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Pool">
+                <div class="gallery-overlay">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+            </div>
+            <div class="gallery-item" data-aos="zoom-in">
+                <img src="https://images.unsplash.com/photo-1591088246692-4d8a2f9b1b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Restaurant">
+                <div class="gallery-overlay">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+            </div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Suite">
+                <div class="gallery-overlay">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+            </div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
+                <img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Spa">
+                <div class="gallery-overlay">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT SECTION ===== -->
+    <section id="contact-section" class="section">
+        <h2 class="section-title" data-aos="fade-up">Get In <span>Touch</span></h2>
+        <p class="section-subtitle" data-aos="fade-up">We're here to assist you 24/7</p>
+
+        <div class="contact-container">
+            <div class="contact-info" data-aos="fade-right">
+                <h3>Contact Information</h3>
+                
+                <div class="contact-detail">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Address</h4>
+                        <p>Bole Road, Addis Ababa, Ethiopia</p>
+                    </div>
+                </div>
+
+                <div class="contact-detail">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Phone</h4>
+                        <p>+251 11 554 1234</p>
+                    </div>
+                </div>
+
+                <div class="contact-detail">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Email</h4>
+                        <p>info@everesthotel.com</p>
+                    </div>
+                </div>
+
+                <div class="contact-detail">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>24/7 Reception</h4>
+                        <p>Always open for our guests</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form" data-aos="fade-left">
+                <h3 style="color: #c8aa64; margin-bottom: 2rem;">Send us a message</h3>
+                
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Your Email">
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Subject">
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Your Message"></textarea>
+                </div>
+                <button class="btn-primary" style="width: 100%;">SEND MESSAGE</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TEAM SECTION ===== -->
+    <section id="team-section" class="section">
+        <h2 class="section-title" data-aos="fade-up">Our <span>Team</span></h2>
+        <p class="section-subtitle" data-aos="fade-up">Group Assignment - Hotel Management System</p>
+
+        <div class="team-grid">
+            <!-- Member 1 -->
+            <div class="team-card" data-aos="fade-up">
+                <div class="team-avatar">
+                    <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Sumeya">
+                </div>
+                <h3 class="team-name">Sumeya Kasim</h3>
+                <p class="team-role">Project Manager</p>
+                <p class="team-id">ID: STU-001</p>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- Member 2 -->
+            <div class="team-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="team-avatar">
+                    <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Kidist">
+                </div>
+                <h3 class="team-name">Kidist Minas</h3>
+                <p class="team-role">Frontend Developer</p>
+                <p class="team-id">ID: STU-002</p>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- Member 3 -->
+            <div class="team-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="team-avatar">
+                    <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Huzeyfa">
+                </div>
+                <h3 class="team-name">Huzeyfa A/Kadir</h3>
+                <p class="team-role">Backend Developer</p>
+                <p class="team-id">ID: STU-003</p>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- Member 4 -->
+            <div class="team-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="team-avatar">
+                    <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Siyam">
+                </div>
+                <h3 class="team-name">Siyam Mekdad</h3>
+                <p class="team-role">Database Admin</p>
+                <p class="team-id">ID: STU-004</p>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- Member 5 -->
+            <div class="team-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="team-avatar">
+                    <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="Eden">
+                </div>
+                <h3 class="team-name">Eden Asfaw</h3>
+                <p class="team-role">UI/UX Designer</p>
+                <p class="team-id">ID: STU-005</p>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- Member 6 -->
+            <div class="team-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="team-avatar">
+                    <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="Selman">
+                </div>
+                <h3 class="team-name">Selman Ibrahim</h3>
+                <p class="team-role">QA Engineer</p>
+                <p class="team-id">ID: STU-006</p>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- Member 7 -->
+            <div class="team-card" data-aos="fade-up" data-aos-delay="600">
+                <div class="team-avatar">
+                    <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="Bemnet">
+                </div>
+                <h3 class="team-name">Bemnet Yohans</h3>
+                <p class="team-role">Technical Writer</p>
+                <p class="team-id">ID: STU-007</p>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- Member 8 -->
+            <div class="team-card" data-aos="fade-up" data-aos-delay="700">
+                <div class="team-avatar">
+                    <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="Imran">
+                </div>
+                <h3 class="team-name">Imran Shensu</h3>
+                <p class="team-role">DevOps Engineer</p>
+                <p class="team-id">ID: STU-008</p>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BOOKING SECTION ===== -->
+    <section id="booking-section" class="section">
+        <h2 class="section-title" data-aos="fade-up">Book Your <span>Stay</span></h2>
+        <p class="section-subtitle" data-aos="fade-up">Experience luxury at Everest Hotel</p>
+
+        <div style="max-width: 800px; margin: 0 auto; background: rgba(255,255,255,0.03); border-radius: 30px; padding: 3rem;" data-aos="fade-up">
+            <div class="form-group">
+                <label style="color: #c8aa64; display: block; margin-bottom: 0.5rem;">Check-in Date</label>
+                <input type="date">
+            </div>
+            <div class="form-group">
+                <label style="color: #c8aa64; display: block; margin-bottom: 0.5rem;">Check-out Date</label>
+                <input type="date">
+            </div>
+            <div class="form-group">
+                <label style="color: #c8aa64; display: block; margin-bottom: 0.5rem;">Room Type</label>
+                <select style="width: 100%; padding: 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(200,170,100,0.2); border-radius: 10px; color: white;">
+                    <option>Presidential Suite</option>
+                    <option>Executive Suite</option>
+                    <option>Deluxe Room</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label style="color: #c8aa64; display: block; margin-bottom: 0.5rem;">Number of Guests</label>
+                <input type="number" min="1" max="4" value="2">
+            </div>
+            <button class="btn-primary" style="width: 100%;">CHECK AVAILABILITY</button>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">EVEREST</div>
+                <p style="color: rgba(255,255,255,0.6);">Experience luxury redefined</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a onclick="showSection('rooms')">Rooms</a></li>
+                    <li><a onclick="showSection('facilities')">Facilities</a></li>
+                    <li><a onclick="showSection('dining')">Dining</a></li>
+                    <li><a onclick="showSection('gallery')">Gallery</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +251 11 554 1234</li>
+                    <li><i class="fas fa-envelope"></i> info@everesthotel.com</li>
+                    <li><i class="fas fa-map-marker"></i> Addis Ababa</li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Follow Us</h4>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="group-members">
+                <span>Group Members:</span> Sumeya K., Kidist M., Huzeyfa A., Siyam M., Eden A., Selman I., Bemnet Y., Imran S.
+            </div>
+            <p>© 2026 Everest Hotel Management System | Group Assignment - Computer Science</p>
+            <p style="margin-top: 0.5rem;">Grade 11B|<br>by M.R enyew<br>submit date:wednesdya,mar 10</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Navigation function
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').classList.add('active-section');
+            
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Find and activate the clicked nav item
+            event.currentTarget.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const navLinks = document.querySelector('.nav-links');
+            if (window.innerWidth > 768) {
+                navLinks.style.display = 'flex';
+            } else {
+                navLinks.style.display = 'none';
+            }
+        });
+
+        // Gallery image click
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const img = this.querySelector('img').src;
+                // You can add lightbox functionality here
+                window.open(img, '_blank');
+            });
+        });
+
+        // Booking button
+        document.querySelectorAll('.btn-book, .btn-primary').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.classList.contains('btn-book') || this.textContent.includes('BOOK')) {
+                    showSection('booking');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
